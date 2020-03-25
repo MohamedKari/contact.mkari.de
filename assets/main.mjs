@@ -114,7 +114,7 @@ function processOutput(outputText){
         outputString = JSON.stringify(outputText, null, "  ")
     }
 
-    outputString = outputString.replace("$(date)", )
+    outputString = outputString.replace("$(date)", getDateString())
 
     return outputString
 }
