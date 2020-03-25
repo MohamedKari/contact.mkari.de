@@ -1,75 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <title>mkari.de</title>
-        <style>
-            body {
-                background-color: #111111;
-                color: white
-            }
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-            a:link {
-                color: white;
-            }
+        <link type="text/css" rel="stylesheet" href="assets/main.css">
 
-            a:visited, a:hover, a:active {
-                color: darkgray;
-            }
+        <script defer type="module">
+            import "./assets/main.mjs"
+        </script>
 
-            </style>
+        <title>Mo Kari</title>
     </head>
     <body>
+    <div id="terminal">
 
-<pre>
-Last login: Wed Mar 25 00:53:17 on ttys001
+        <noscript>
+            <div class="command">
+                <div class="input">Last login: Wed Mar 25 00:53:17 on ttys001</div>
+                <div class="output">mo@intellitec:www $ cd www && http-server -s</div>
+            </div>
+            <div class="command">
+                <div class="input">mo@intellitec:www $ man mo</div>
+                <div class="output">Machine Learning Researcher @Porsche</div>
+            </div>
+            <div class="command">
+                <div class="input">mo@intellitec:www $ cat greeeting.txt</div>
+                <div class="output">
+                    Hi :) I'm Mo. Nice to meet you! <br>
+                    Do you want to contact me? Maybe to collaborate on a cool ML research or to solve a hard data engineering problem? <br>
+                    Or just grab some coffeee? <br>
+                    <br> 
+                    Feel free to reach out!
+                </div>
+            </div>
+            <div class="command">
+                <div class="input">mo@intellitec:www $ curl https://mkari.de/contact.json | python -m json.tool</div>
+                <div class="output">
+                    { <br>
+                    &emsp; "Email": &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  "<a href='mailto:contact@mkari.de'>contact@mkari.de</a>", <br>
+                    <br>
+                    &emsp; "Profiles": { <br>
+                    &emsp; &emsp; "LinkedIn": &nbsp;                            "<a href='https://www.linkedin.com/in/MohamedKari'>linkedin.com/in/MohamedKari</a>>", <br>
+                    &emsp; &emsp; "GitHub":   &nbsp;&nbsp;&nbsp;                "<a href='https://www.github.com/MohamedKari'>github.com/MohamedKari</a>", <br>
+                    &emsp; &emsp; "Xing":     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    "<a href='https://www.xing.com/profile/Mohamed_Kari'>xing.com/profile/Mohamed_Kari</a>", <br>
+                    &emsp; &emsp; "Skype":    &nbsp;&nbsp;&nbsp;&nbsp;          "<a href='skype:mohamed.kari94'>mohamed.kari94</a>" <br>
+                    &emsp; } <br>
+                    }
+                </div>
+            </div>
+            <div class="command">
+                <div class="input"></div>
+                <div class="output"></div>
+            </div>
+            <div class="command">
+                <div class="input"></div>
+                <div class="output"></div>
+            </div>
+            
+            
+            
 
-mo@intellitec:~$ cd www && http-server -s
-</pre>
+            <!--Public Key: ""-->
 
-<pre>
-mo@intellitec:~$ man mo
-Machine Learning Researcher @Porsche
-</pre>
+            
+                    <!-- References
+                    mo@intellitec:www $ bibtex show | awk 
+                    ...
+                    -->
+                    
+                    
+                    <!--
+                        Todos: 
+                        - Upload contact.json
+                        - Live date
+                        - Typing effect
+                        - Underline and a-tag links
 
-<pre>
-mo@intellitec:~$ cat greeeting.txt
-Hi :) I'm Mo. Nice to meet you!
-Do you want to contact me? Maybe to collaborate on something such as ML research or a Data Engineering project? 
-Or just drink a coffeee?
-
-Feel free to contact me!
-</pre>
-
-<pre>
-mo@intellitec:~$ curl https://mkari.de/contact.json | python -m json.tool
-{
-    "Email":        "<a href="mailto:contact@mkari.de">contact@mkari.de</a>",
-    "Profiles": {
-        "LinkedIn":     "<a href='https://www.linkedin.com/in/MohamedKari'>linkedin.com/in/MohamedKari</a>>",
-        "GitHub":       "<a href='https://www.xing.com/profile/Mohamed_Kari'>github.com/MohamedKari</a>"
-        "GitHub":       "<a href='https:/www.github.com/MohamedKari'>github.com/MohamedKari</a>"
-        "Skype":        "<a href='skype:mohamed.kari94'>mohamed.kari94</a>"<!--Public Key: ""-->
-    }
-}
-</pre>
-
-<pre>
-mo@intellitec:~$ ▋
-</pre>
-        <!-- References
-        mo@intellitec:~$ bibtex show | awk 
-        ...
-        -->
-        
-        
-        <!--
-            Todos: 
-            - Upload contact.json
-            - Live date
-            - Typing effect
-            - Underline and a-tag links
-
-        -->
-
+                    -->
+        </noscript>
+    </div>
     </body>
 </html>

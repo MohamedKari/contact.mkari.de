@@ -1,0 +1,38 @@
+body {
+    background-color: #111111;
+    color: white
+}
+
+a:link {
+    color: white;
+}
+
+a:visited, a:hover, a:active {
+    color: darkgray;
+}
+
+.nodisplay {
+    display: none;
+}
+
+.command {
+    /* white-space: pre-line; */
+    font-family: 'Courier New', Courier, monospace
+}
+
+.command:after {
+    white-space: pre-line;
+    content: "\A"
+}
+
+.input {
+    font-weight: bold;
+}
+
+.output {
+
+}
+
+.pre-wrap{
+    white-space: pre-wrap;
+}
