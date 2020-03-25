@@ -1,23 +1,34 @@
 let isSet = false
 let terminal = undefined
-let fast_forward = false
+let fastForward = false
+
+let lastTouch = undefined
+let admissibleDoubleTouchInterval = 200
 
 document.addEventListener("DOMContentLoaded", ready)
 
+
 async function ready() {
-    window.addEventListener("keydown", handleKeyDown)
+    window.addEventListener("keydown", event => {
+        if([13, 27, 32].includes(event.keyCode)){
+            fastForward = true
+        }
+    })
+
+    window.addEventListener("touchstart", event => {
+        const now = Date.now()
+        if(now - lastTouch < admissibleDoubleTouchInterval){
+            fastForward = true
+        }
+        lastTouch = now
+    })
+
     terminal = document.getElementById("terminal")    
 
     const response = await fetch("./content.json")
     const contentDict = await response.json()
     
     await typeContent(contentDict)
-}
-
-function handleKeyDown(event){
-    if([13, 27, 32].includes(event.keyCode)){
-        fast_forward = true
-    }
 }
 
 async function typeContent(contentDict){
@@ -119,11 +130,11 @@ function processOutput(outputText){
     return outputString
 }
 
-// touch event
+
 // json styling
 
 function getPause(typingStyle){
-    if(fast_forward){
+    if(fastForward){
         return 0
     }
     
@@ -136,10 +147,10 @@ async function delay(t, v){
     let finalCheckDuration = t % checkInterval
 
     for(let i=0; i<checkCount; i++){
-        if(!fast_forward) await _delay(checkInterval)
+        if(!fastForward) await _delay(checkInterval)
     }
 
-    if(!fast_forward) await _delay(finalCheckDuration)
+    if(!fastForward) await _delay(finalCheckDuration)
 }
 
 function _delay(t, v) {
