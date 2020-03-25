@@ -105,14 +105,22 @@ async function typeInput(element, text, typingStyle){
 }
 
 function processOutput(outputText){
+    let outputString = undefined
     if(typeof outputText === "string"){
-        return outputText
+        outputString = outputText
     } else if (Array.isArray(outputText)){
-        return outputText.join("\n")
+        outputString = outputText.join("\n")
     } else {
-        return JSON.stringify(outputText, null, "  ")
+        outputString = JSON.stringify(outputText, null, "  ")
     }
+
+    outputString = outputString.replace("$(date)", )
+
+    return outputString
 }
+
+// touch event
+// json styling
 
 function getPause(typingStyle){
     if(fast_forward){
@@ -132,3 +140,8 @@ function delay(t, v) {
      return Math.random() * (max - min) + min;
  }
 
+
+ function getDateString() {
+    let d = String(new Date())
+    return d.slice(0, 11) + d.slice(16, 31)
+ }
