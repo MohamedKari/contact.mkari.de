@@ -42,13 +42,34 @@
             "input":            "curl https://mkari.de/contact.json | python -m json.tool",
             "outputDelay":      800,
             "output": {
-                "Email":        "<a href='mailto:contact@mkari.de'>contact@mkari.de</a>",
-                "Profiles": {
-                    "LinkedIn": "<a href='https://www.linkedin.com/in/MohamedKari'>linkedin.com/in/MohamedKari</a>>",
-                    "Xing":     "<a href='https://www.xing.com/profile/Mohamed_Kari'>xing.com/profile/Mohamed_Kari</a>",
-                    "GitHub":   "<a href='https://www.github.com/MohamedKari'>github.com/MohamedKari</a>",
-                    "Skype":    "<a href='skype:mohamed.kari94'>mohamed.kari94</a>"
-                }
+                "mobile": [
+                    "{",
+                    " \"Email\":",
+                    "  \"<a href='mailto:contact@mkari.de'>contact@mkari.de</a>\"",
+                    " \"Profiles\": {",
+                    "  \"LinkedIn\":", 
+                    "   \"<a href='https://www.linkedin.com/in/MohamedKari'>linkedin.com/in/MohamedKari</a>\"",
+                    "  \"Xing\":", 
+                    "   \"xing.to/mkari</a>\"",
+                    "  \"GitHub\":", 
+                    "   \"<a href='https://www.github.com/MohamedKari'>github.com/MohamedKari</a>\"",
+                    "  \"Skype\":", 
+                    "   \"<a href='skype:mohamed.kari94'>mohamed.kari94</a>\"",
+                    " }",
+                    "}" 
+                ],
+                "desktop": [
+                    "{",
+                    "  \"Email\":      \"<a href='mailto:contact@mkari.de'>contact@mkari.de</a>\"",
+                    "",
+                    "  \"Profiles\": {",
+                    "    \"LinkedIn\": \"<a href='https://www.linkedin.com/in/MohamedKari'>linkedin.com/in/MohamedKari</a>\"",
+                    "    \"Xing\":     \"<a href='https://www.xing.com/profile/Mohamed_Kari'>xing.to/mkari</a>\"",
+                    "    \"GitHub\":   \"<a href='https://www.github.com/MohamedKari'>github.com/MohamedKari</a>\"",
+                    "    \"Skype\":    \"<a href='skype:mohamed.kari94'>mohamed.kari94</a>\"",
+                    "  }",
+                    "}" 
+                ]
             },
             "typingStyle": {
                 "lowerBound": 40,

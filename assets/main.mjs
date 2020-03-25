@@ -121,8 +121,14 @@ function processOutput(outputText){
         outputString = outputText
     } else if (Array.isArray(outputText)){
         outputString = outputText.join("\n")
+    } else if (outputText.hasOwnProperty("mobile") && outputText.hasOwnProperty("desktop")) {
+        if (window.matchMedia("(max-width: 600px)").matches){
+            outputString = processOutput(outputText.mobile)
+        } else {
+            outputString = processOutput(outputText.desktop)
+        }
     } else {
-        outputString = JSON.stringify(outputText, null, "  ")
+        throw "Output format not recognized for outputText..."
     }
 
     outputString = outputString.replace("$(date)", getDateString())
