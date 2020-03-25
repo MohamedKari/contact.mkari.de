@@ -8,11 +8,13 @@
         "lowerBound": 70,
         "upperBound": 140
     }, 
-    "promptDelay": 600,
+    "promptDelay": 500,
     "outputDelay": 0,
     "commandSequence": [
-        {
+        {   
+            "promptDelay":  800,
             "input":        "ssh mkari.de",
+            "outputDelay":  1300,
             "output":       "Last login: $(date) on ttys001",
             "prompt": {
                 "username": "mo",
@@ -21,10 +23,12 @@
             }
         },
         {
+            "promptDelay":  700,
             "input":        "man mo",
             "output":       "Machine Learning Researcher @Porsche"
         },
         {
+            "promptDelay":  1000,
             "input":        "cat greeeting.txt",
             "output": [ 
                             "Hi :) I'm Mo. Nice to (kinda) meet you!", 
@@ -34,8 +38,9 @@
                             "Feel free to reach out!"
             ]
         },
-        {
+        {   "promptDelay":      4500,
             "input":            "curl https://mkari.de/contact.json | python -m json.tool",
+            "outputDelay":      800,
             "output": {
                 "Email":        "<a href='mailto:contact@mkari.de'>contact@mkari.de</a>",
                 "Profiles": {

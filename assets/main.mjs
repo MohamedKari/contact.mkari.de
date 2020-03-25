@@ -24,6 +24,8 @@ async function typeContent(contentDict){
     
     const prompt = getPromptString(contentDict.prompt)
     const typingStyle = contentDict.typingStyle
+    const promptDelay = contentDict.promptDelay
+    const outputDelay = contentDict.outputDelay
 
     const commandSequence = contentDict.commandSequence
 
@@ -33,8 +35,9 @@ async function typeContent(contentDict){
         const outputText = command.output
 
         let currentPrompt = getPromptString(command.prompt) || prompt
-        let currentTypingStyle = command.typingStyle ||typingStyle
-
+        let currentTypingStyle = command.typingStyle || typingStyle
+        let currentPromptDelay = command.promptDelay || promptDelay
+        let currentOutputDelay = command.outputDelay || outputDelay
 
         const promptElement = document.createElement("span")
         promptElement.classList.add("prompt")
@@ -69,8 +72,10 @@ async function typeContent(contentDict){
         terminal.insertAdjacentElement("beforeend", commandElement) 
 
         show(cursorElement)
+        await delay(currentPromptDelay)
         await typeInput(typeElement, inputText, currentTypingStyle)
         hide(cursorElement)
+        await delay(currentOutputDelay)
         show(outputElement)
     }
 }
