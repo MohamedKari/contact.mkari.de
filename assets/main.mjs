@@ -130,7 +130,19 @@ function getPause(typingStyle){
     return randint(typingStyle.lowerBound, typingStyle.upperBound)
 }
 
-function delay(t, v) {
+async function delay(t, v){
+    let checkInterval = 100
+    let checkCount = Math.floor(t/checkInterval)
+    let finalCheckDuration = t % checkInterval
+
+    for(let i=0; i<checkCount; i++){
+        if(!fast_forward) await _delay(checkInterval)
+    }
+
+    if(!fast_forward) await _delay(finalCheckDuration)
+}
+
+function _delay(t, v) {
     return new Promise(function(resolve) { 
         setTimeout(resolve.bind(null, v), t);
     });
