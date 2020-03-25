@@ -1,0 +1,54 @@
+{
+    "prompt": {
+        "username": "mo",
+        "hostname": "mkari.de",
+        "dir":      "www"
+    },
+    "typingStyle": {
+        "lowerBound": 70,
+        "upperBound": 140
+    }, 
+    "promptDelay": 600,
+    "outputDelay": 0,
+    "commandSequence": [
+        {
+            "input":        "ssh mkari.de",
+            "output":       "Last login: $(date) on ttys001",
+            "prompt": {
+                "username": "mo",
+                "hostname": "Mos-MBP",
+                "dir":      "~"
+            }
+        },
+        {
+            "input":        "man mo",
+            "output":       "Machine Learning Researcher @Porsche"
+        },
+        {
+            "input":        "cat greeeting.txt",
+            "output": [ 
+                            "Hi :) I'm Mo. Nice to (kinda) meet you!", 
+                            "Do you want to contact me? Maybe to collaborate on some cool ML research or to solve a hard data engineering problem?",
+                            "Or just grab some coffee?",
+                            "",
+                            "Feel free to reach out!"
+            ]
+        },
+        {
+            "input":            "curl https://mkari.de/contact.json | python -m json.tool",
+            "output": {
+                "Email":        "<a href='mailto:contact@mkari.de'>contact@mkari.de</a>",
+                "Profiles": {
+                    "LinkedIn": "<a href='https://www.linkedin.com/in/MohamedKari'>linkedin.com/in/MohamedKari</a>>",
+                    "Xing":     "<a href='https://www.xing.com/profile/Mohamed_Kari'>xing.com/profile/Mohamed_Kari</a>",
+                    "GitHub":   "<a href='https://www.github.com/MohamedKari'>github.com/MohamedKari</a>",
+                    "Skype":    "<a href='skype:mohamed.kari94'>mohamed.kari94</a>"
+                }
+            },
+            "typingStyle": {
+                "lowerBound": 40,
+                "upperBound": 90
+            }
+        }
+    ]
+}
