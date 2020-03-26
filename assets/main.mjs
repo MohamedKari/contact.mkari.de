@@ -5,8 +5,6 @@ let admissibleDoubleTouchInterval = 200
 
 document.addEventListener("DOMContentLoaded", ready)
 
-
-
 async function ready() {
     window.addEventListener("keydown", event => {
         if([13, 27, 32].includes(event.keyCode)){
@@ -55,12 +53,26 @@ function convertNoscriptToDiv(noscriptid, newid){
     return div
 }
 
+function preprocessOutput(output){
+    let preprocessedOutput = output
+    const elementsToPreprocess = output.querySelectorAll("[data-preprocess]")
+
+    for(let element of elementsToPreprocess){
+        console.log(element)
+        if(element.getAttribute("data-preprocess") == "replace-by-date"){
+            element.innerHTML = getDateString()
+        }
+    }
+
+    return preprocessedOutput
+}
+
 function getCommandFromCommandElement(commandElement, defaultTypingStyle){
     const command = {
         prompt:     commandElement.getElementsByClassName("prompt")[0],
         type:       commandElement.getElementsByClassName("type")[0],
         cursor:     commandElement.getElementsByClassName("cursor")[0],
-        output:     commandElement.getElementsByClassName("output")[0], 
+        output:     preprocessOutput(commandElement.getElementsByClassName("output")[0]), 
     }
 
     command.typeDelay = parseInt(command.type.attributes["data-delay"].value)
