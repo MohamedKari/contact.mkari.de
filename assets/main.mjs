@@ -8,6 +8,7 @@ let admissibleDoubleTouchInterval = 200
 document.addEventListener("DOMContentLoaded", ready)
 
 
+
 async function ready() {
     window.addEventListener("keydown", event => {
         if([13, 27, 32].includes(event.keyCode)){
@@ -23,71 +24,67 @@ async function ready() {
         lastTouch = now
     })
 
-    terminal = document.getElementById("terminal")    
+    terminal = document.getElementById("terminal")
 
-    const response = await fetch("./assets/content.json")
-    const contentDict = await response.json()
+    const defaultTypingStyle = {
+        "lowerBound": parseInt(terminal.attributes["data-typing-style-lower"].value),
+        "upperBound": parseInt(terminal.attributes["data-typing-style-upper"].value),
+    }
+
+    const commandSequenceElement = convertNoscriptToDiv("noscript-comand-sequence", "command-sequence")
+    const commandElements = commandSequenceElement.getElementsByClassName("command")
+
+    const commands = Array.from(commandElements).map( (element) => 
+        getCommandFromCommandElement(element, defaultTypingStyle)
+    )
+
+    prepareCommands(commands)
     
-    await typeContent(contentDict)
+    document.getElementById("terminal").appendChild(
+        commandSequenceElement               
+    )
+
+    await typeCommands(commands)   
+    
 }
 
-async function typeContent(contentDict){
-    
-    const prompt = getPromptString(contentDict.prompt)
-    const typingStyle = contentDict.typingStyle
-    const promptDelay = contentDict.promptDelay
-    const outputDelay = contentDict.outputDelay
+function convertNoscriptToDiv(noscriptid, newid){
+    const noscript = document.getElementById(noscriptid)
+    const div = document.createElement("div")
+    div.innerHTML = noscript.innerText
+    div.id = newid
+    noscript.parentElement.removeChild(noscript)
+    return div
+}
 
-    const commandSequence = contentDict.commandSequence
+function getCommandFromCommandElement(commandElement, defaultTypingStyle){
+    const command = {
+        prompt:     commandElement.getElementsByClassName("prompt")[0],
+        type:       commandElement.getElementsByClassName("type")[0],
+        cursor:     commandElement.getElementsByClassName("cursor")[0],
+        output:     commandElement.getElementsByClassName("output")[0], 
+    }
 
-    for(let i=0; i<commandSequence.length; i++){
-        const command = commandSequence[i]
-        const inputText = command.input
-        const outputText = command.output
+    command.typeDelay = parseInt(command.type.attributes["data-delay"].value)
+    command.outputDelay = parseInt(command.output.attributes["data-delay"].value)
 
-        let currentPrompt = getPromptString(command.prompt) || prompt
-        let currentTypingStyle = command.typingStyle || typingStyle
-        let currentPromptDelay = command.promptDelay || promptDelay
-        let currentOutputDelay = command.outputDelay || outputDelay
+    const currentTypingStyleLower = command.type.attributes["data-typing-style-lower"]
+    const currentTypingStyleUpper = command.type.attributes["data-typing-style-upper"] 
 
-        const promptElement = document.createElement("span")
-        promptElement.classList.add("prompt")
-        promptElement.innerHTML = currentPrompt
+    command.typingStyle = {
+        "lowerBound": currentTypingStyleLower && currentTypingStyleLower.value && parseInt(currentTypingStyleLower.value) || defaultTypingStyle.lowerBound,
+        "upperBound": currentTypingStyleUpper && currentTypingStyleUpper.value && parseInt(currentTypingStyleUpper.value)|| defaultTypingStyle.upperBound
+    }
 
-        const typeElement = document.createElement("span")
-        typeElement.classList.add("type")
+    return command
+}
 
-        const cursorElement = document.createElement("span")
-        cursorElement.classList.add("cursor")
-        cursorElement.classList.add("nodisplay")
-        cursorElement.innerHTML = "▌"
-
-        const inputElement = document.createElement("div")
-        inputElement.classList.add("input")
-        inputElement.appendChild(promptElement)
-        inputElement.appendChild(typeElement)
-        inputElement.appendChild(cursorElement)
-
-        const outputElement = document.createElement("div")
-        outputElement.classList.add("output")
-        outputElement.classList.add("nodisplay")
-        outputElement.classList.add("pre-wrap")
-        outputElement.innerHTML = processOutput(outputText)
-
-        const commandElement = document.createElement("div")
-        commandElement.classList.add("command")
-        commandElement.id = String(i)
-        commandElement.appendChild(inputElement)
-        commandElement.appendChild(outputElement)
-        
-        terminal.insertAdjacentElement("beforeend", commandElement) 
-
-        show(cursorElement)
-        await delay(currentPromptDelay)
-        await typeInput(typeElement, inputText, currentTypingStyle)
-        hide(cursorElement)
-        await delay(currentOutputDelay)
-        show(outputElement)
+function prepareCommands(commands){
+    for(let command of commands){
+        hide(command.prompt)
+        hide(command.type)
+        hide(command.cursor)
+        hide(command.output)
     }
 }
 
@@ -99,6 +96,27 @@ function hide(element){
     element.classList.add("nodisplay")
 }
 
+
+
+async function typeCommands(commands){
+
+    for(let command of commands){
+        const typeText = String(command.type.innerText).trim()
+        command.type.innerHTML = ""
+
+        show(command.prompt)
+        show(command.cursor)
+        await delay(command.typeDelay)
+        show(command.type)
+        await typeInput(command.type, typeText, command.typingStyle)
+        hide(command.cursor)
+        await delay(command.outputDelay)
+        show(command.output)
+    }
+}
+
+
+
 function getPromptString(promptObject){
     if(promptObject){
         return `${promptObject.username}@${promptObject.hostname}:${promptObject.dir} $ `
@@ -106,12 +124,13 @@ function getPromptString(promptObject){
 }
 
 async function typeInput(element, text, typingStyle){
+
     for(let i=0; i<text.length; i++){
         let char = text.charAt(i)
         
         element.insertAdjacentText("beforeend", char)
-
-        await delay(getPause(typingStyle))
+        const pause = getPause(typingStyle)
+        await delay(pause)
     }
 }
 

@@ -16,23 +16,30 @@ a:visited, a:hover, a:active {
 }
 
 .command {
-    /* white-space: pre-line; */
-    font-family: 'Courier New', Courier, monospace
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    flex-flow: wrap;
+    margin-bottom: 1em;
 }
 
-.command:after {
-    white-space: pre-line;
-    content: "\A"
+.prompt {
+    margin-right: 10px;
 }
 
 .input {
     font-weight: bold;
+    display: flex;
+    width: 100%;
 }
 
 .output {
-
+    width: 100%;
 }
 
-.pre-wrap{
+.pre-wrap {
     white-space: pre-wrap;
+}
+
+.pre-line {
+    white-space: pre-line;
 }
