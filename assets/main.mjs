@@ -25,7 +25,7 @@ async function ready() {
 
     terminal = document.getElementById("terminal")    
 
-    const response = await fetch("./content.json")
+    const response = await fetch("./assets/content.json")
     const contentDict = await response.json()
     
     await typeContent(contentDict)
