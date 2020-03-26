@@ -1,5 +1,3 @@
-let isSet = false
-let terminal = undefined
 let fastForward = false
 
 let lastTouch = undefined
@@ -24,7 +22,7 @@ async function ready() {
         lastTouch = now
     })
 
-    terminal = document.getElementById("terminal")
+    let terminal = document.getElementById("terminal")
 
     const defaultTypingStyle = {
         "lowerBound": parseInt(terminal.attributes["data-typing-style-lower"].value),
@@ -97,7 +95,6 @@ function hide(element){
 }
 
 
-
 async function typeCommands(commands){
 
     for(let command of commands){
@@ -114,8 +111,6 @@ async function typeCommands(commands){
         show(command.output)
     }
 }
-
-
 
 function getPromptString(promptObject){
     if(promptObject){
@@ -134,29 +129,6 @@ async function typeInput(element, text, typingStyle){
     }
 }
 
-function processOutput(outputText){
-    let outputString = undefined
-    if(typeof outputText === "string"){
-        outputString = outputText
-    } else if (Array.isArray(outputText)){
-        outputString = outputText.join("\n")
-    } else if (outputText.hasOwnProperty("mobile") && outputText.hasOwnProperty("desktop")) {
-        if (window.matchMedia("(max-width: 600px)").matches){
-            outputString = processOutput(outputText.mobile)
-        } else {
-            outputString = processOutput(outputText.desktop)
-        }
-    } else {
-        throw "Output format not recognized for outputText..."
-    }
-
-    outputString = outputString.replace("$(date)", getDateString())
-
-    return outputString
-}
-
-
-// json styling
 
 function getPause(typingStyle){
     if(fastForward){
