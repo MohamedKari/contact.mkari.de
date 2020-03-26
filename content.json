@@ -24,7 +24,7 @@
         },
         {
             "promptDelay":  700,
-            "input":        "man mo",
+            "input":        "whoami",
             "output":       "Machine Learning Researcher @Porsche"
         },
         {
