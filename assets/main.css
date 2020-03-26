@@ -17,23 +17,15 @@ a:visited, a:hover, a:active {
 
 .command {
     font-family: 'Courier New', Courier, monospace;
-    display: flex;
-    flex-flow: wrap;
     margin-bottom: 1em;
-}
-
-.prompt {
-    margin-right: 10px;
 }
 
 .input {
     font-weight: bold;
-    display: flex;
-    width: 100%;
 }
 
 .output {
-    width: 100%;
+    
 }
 
 .pre-wrap {
