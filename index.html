@@ -16,8 +16,13 @@
     <div id="terminal" 
          data-typing-style-lower="70" 
          data-typing-style-upper="140">
-            
-        </span>
+
+        <!-- https://css-tricks.com/fighting-the-space-between-inline-block-elements/ -->
+        <!-- Because we need to break a typed commamd that is too long for the current line 
+             _below_ the prompt without dragging previous letters into the next line too, 
+             (resulting in multiple rectangular boxes) we cannot use flexbox.
+             Instead we use the hack _commenting out whitespace_.
+        -->
 
         <noscript id="noscript-comand-sequence">
             <div class="command">
@@ -28,7 +33,7 @@
                     </span>
                 </div>
                 <div class="output" data-delay="1300">
-                    Last login: Thu Mar 26 09:39:05 GMT+01 on ttys001
+                    Last login: <span data-type="date">Thu Mar 26 09:39:05 GMT+01</span> on ttys001
                 </div>
             </div>
 
@@ -69,17 +74,35 @@
                         curl https://mkari.de/contact.json | python -m json.tool</span><!--
                 --><span class="cursor nodisplay">▌
                 </div>
-                <div class="output pre-wrap" data-delay="800"><!--
-                 -->{
-<!--             -->    "Email":      "<a href='mailto:contact@mkari.de'>contact@mkari.de</a>",
-<!--             -->    
-<!--             -->    "Profiles": {
-<!--             -->        "LinkedIn": "<a href='https://www.linkedin.com/in/MohamedKari'>linkedin.com/in/MohamedKari</a>",
-<!--             -->        "Xing":     "<a href='https://www.xing.to/mkari'>xing.to/mkari</a>",
-<!--             -->        "GitHub":   "<a href='https://www.github.com/MohamedKari'>github.com/MohamedKari</a>",
-<!--             -->        "Skype":    "<a href='skype:mohamed.kari94'>mohamed.kari94</a>"
-<!--             -->    }
-<!--             -->}
+                <div class="output" data-delay="800">
+                    <div class="pre-wrap desktop"><!--
+                     -->{
+<!--                 -->    "Email":        "<a href='mailto:contact@mkari.de'>contact@mkari.de</a>",
+<!--                 -->    
+<!--                 -->    "Profiles": {
+<!--                 -->        "LinkedIn": "<a href='https://www.linkedin.com/in/MohamedKari'>linkedin.com/in/MohamedKari</a>",
+<!--                 -->        "Xing":     "<a href='https://www.xing.to/mkari'>xing.to/mkari</a>",
+<!--                 -->        "GitHub":   "<a href='https://www.github.com/MohamedKari'>github.com/MohamedKari</a>",
+<!--                 -->        "Skype":    "<a href='skype:mohamed.kari94'>mohamed.kari94</a>"
+<!--                 -->    }
+<!--                 -->}
+                    </div>
+                    <div class="pre-wrap mobile"><!--
+                     -->{
+<!--                 --> "Email":      
+<!--                 -->  "<a href='mailto:contact@mkari.de'>contact@mkari.de</a>",
+<!--                 --> "Profiles": {
+<!--                 -->  "LinkedIn": 
+<!--                 -->   "<a href='https://www.linkedin.com/in/MohamedKari'>linkedin.com/in/MohamedKari</a>",
+<!--                 -->  "Xing":     
+<!--                 -->   "<a href='https://www.xing.to/mkari'>xing.to/mkari</a>",
+<!--                 -->  "GitHub":   
+<!--                 -->   "<a href='https://www.github.com/MohamedKari'>github.com/MohamedKari</a>",
+<!--                 -->  "Skype":    
+<!--                 -->   "<a href='skype:mohamed.kari94'>mohamed.kari94</a>"
+<!--                 --> }
+<!--                 -->}
+                   </div>
                 </div>
             </div>
 
