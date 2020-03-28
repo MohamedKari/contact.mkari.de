@@ -6,8 +6,12 @@ let admissibleDoubleTouchInterval = 200
 document.addEventListener("DOMContentLoaded", ready)
 
 async function ready() {
+    const KEY_CR = 13
+    const KEY_ESC = 27
+    const KEY_SPACE = 32
+
     window.addEventListener("keydown", event => {
-        if([13, 27, 32].includes(event.keyCode)){
+        if([KEY_CR, KEY_ESC, KEY_SPACE].includes(event.keyCode)){
             fastForward = true
         }
     })
@@ -22,26 +26,28 @@ async function ready() {
 
     let terminal = document.getElementById("terminal")
 
-    const defaultTypingStyle = {
-        "lowerBound": parseInt(terminal.attributes["data-typing-style-lower"].value),
-        "upperBound": parseInt(terminal.attributes["data-typing-style-upper"].value),
-    }
-
     const commandSequenceElement = convertNoscriptToDiv("noscript-comand-sequence", "command-sequence")
+   
     const commandElements = commandSequenceElement.getElementsByClassName("command")
-
-    const commands = Array.from(commandElements).map( (element) => 
-        getCommandFromCommandElement(element, defaultTypingStyle)
-    )
-
+    const commands = commandElementsToCommands(commandElements, getDefaultTypingStyle(terminal))
     prepareCommands(commands)
-    
-    document.getElementById("terminal").appendChild(
-        commandSequenceElement               
-    )
+
+    terminal.appendChild(commandSequenceElement)
 
     await typeCommands(commands)   
-    
+}
+
+function getDefaultTypingStyle(terminal){
+    return {
+        lowerBound: parseInt(terminal.attributes["data-typing-style-lower"].value),
+        upperBound: parseInt(terminal.attributes["data-typing-style-upper"].value),
+    }
+}
+
+function commandElementsToCommands(commandElements, defaultTypingStyle){
+    return Array.from(commandElements).map( (element) => 
+        getCommandFromCommandElement(element, defaultTypingStyle)
+    )
 }
 
 function convertNoscriptToDiv(noscriptid, newid){
@@ -115,18 +121,12 @@ async function typeCommands(commands){
 
         show(command.prompt)
         show(command.cursor)
-        await delay(command.typeDelay)
+        await delay_responsively(command.typeDelay)
         show(command.type)
         await typeInput(command.type, typeText, command.typingStyle)
         hide(command.cursor)
-        await delay(command.outputDelay)
+        await delay_responsively(command.outputDelay)
         show(command.output)
-    }
-}
-
-function getPromptString(promptObject){
-    if(promptObject){
-        return `${promptObject.username}@${promptObject.hostname}:${promptObject.dir} $ `
     }
 }
 
@@ -137,7 +137,7 @@ async function typeInput(element, text, typingStyle){
         
         element.insertAdjacentText("beforeend", char)
         const pause = getPause(typingStyle)
-        await delay(pause)
+        await delay_responsively(pause)
     }
 }
 
@@ -150,19 +150,19 @@ function getPause(typingStyle){
     return randint(typingStyle.lowerBound, typingStyle.upperBound)
 }
 
-async function delay(t, v){
+async function delay_responsively(t, v){
     let checkInterval = 100
     let checkCount = Math.floor(t/checkInterval)
     let finalCheckDuration = t % checkInterval
 
     for(let i=0; i<checkCount; i++){
-        if(!fastForward) await _delay(checkInterval)
+        if(!fastForward) await delay(checkInterval, v)
     }
 
-    if(!fastForward) await _delay(finalCheckDuration)
+    if(!fastForward) await delay(finalCheckDuration, v)
 }
 
-function _delay(t, v) {
+function delay(t, v) {
     return new Promise(function(resolve) { 
         setTimeout(resolve.bind(null, v), t);
     });
